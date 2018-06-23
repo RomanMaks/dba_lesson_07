@@ -10,7 +10,7 @@
         product_id = NEW.id,
         event = 'create',
         new_price = NEW.price,
-        created_at = CURRENT_TIMESTAMP;
+        affected_at = CURRENT_TIMESTAMP;
     END;
 
   -- изменение цены (price)
@@ -24,7 +24,7 @@
           event = 'price',
           old_price = OLD.price,
           new_price = NEW.price,
-          created_at = CURRENT_TIMESTAMP;
+          affected_at = CURRENT_TIMESTAMP;
       END;
     END IF;
 
@@ -37,7 +37,7 @@
         product_id = OLD.id,
         event = 'delete',
         old_price = OLD.price,
-        created_at = CURRENT_TIMESTAMP;
+        affected_at = CURRENT_TIMESTAMP;
     END;
 
 -- 2. * Создайте функцию "размер скидки", которая по ID товара будет вычислять - сколько 
