@@ -59,7 +59,7 @@
     INTO result
     FROM change_history
     WHERE product_id = p_id AND event = 'price'
-    ORDER BY created_at DESC
+    ORDER BY affected_at DESC
     LIMIT 1;
   
     RETURN result;
