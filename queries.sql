@@ -44,3 +44,28 @@
 --      составило последнее изменение цены на него в процентах, используя запрос к таблице 
 --      из пункта 2. Примените эту функцию в запросе на выборку товаров.  
   
+  DELIMITER //
+  
+  CREATE FUNCTION amount_of_discount (p_id BIGINT UNSIGNED)
+  RETURNS DECIMAL(5, 2)
+  BEGIN
+  
+    DECLARE result DECIMAL(5, 2) DEFAULT NULL;
+  
+    SELECT IF(
+        new_price < old_price,
+        (old_price - new_price) / old_price * 100,
+        NULL)
+    INTO result
+    FROM change_history
+    WHERE product_id = p_id AND event = 'price'
+    ORDER BY created_at DESC
+    LIMIT 1;
+  
+    RETURN result;
+  
+  END;//
+  
+  -- Запрос на выборку товаров
+  SELECT *, amount_of_discount(id) AS discount
+  FROM products
