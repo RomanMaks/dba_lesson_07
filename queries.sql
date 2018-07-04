@@ -14,7 +14,7 @@
     END;
 
   -- изменение цены (price)
-  CREATE TRIGGER changes_price BEFORE UPDATE ON products
+  CREATE TRIGGER changes_price AFTER UPDATE ON products
   FOR EACH ROW
     IF (OLD.price != NEW.price) THEN
       BEGIN
